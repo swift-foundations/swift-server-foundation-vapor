@@ -9,33 +9,33 @@ import ServerFoundation
 import Vapor
 
 extension Vapor.Middlewares {
-  public typealias Sessions = SessionsMiddleware
+    public typealias Sessions = SessionsMiddleware
 }
 
 extension Vapor.Middlewares.Sessions {
-  public static func secure(
-    driver: any SessionDriver,
-    cookieName: String = "vapor-session",
-    maxAge: Int = 604_800,
-    domain: String? = nil,
-    isSecure: Bool = true
-  ) -> SessionsMiddleware {
-    return SessionsMiddleware(
-      session: driver,
-      configuration: .init(
-        cookieName: cookieName
-      ) { sessionId in
-        return HTTPCookies.Value(
-          string: sessionId.string,
-          expires: Date().addingTimeInterval(Double(maxAge)),
-          maxAge: maxAge,
-          domain: domain,
-          path: "/",
-          isSecure: isSecure,
-          isHTTPOnly: true,
-          sameSite: .lax
+    public static func secure(
+        driver: any SessionDriver,
+        cookieName: String = "vapor-session",
+        maxAge: Int = 604_800,
+        domain: String? = nil,
+        isSecure: Bool = true
+    ) -> SessionsMiddleware {
+        return SessionsMiddleware(
+            session: driver,
+            configuration: .init(
+                cookieName: cookieName
+            ) { sessionId in
+                return HTTPCookies.Value(
+                    string: sessionId.string,
+                    expires: Date().addingTimeInterval(Double(maxAge)),
+                    maxAge: maxAge,
+                    domain: domain,
+                    path: "/",
+                    isSecure: isSecure,
+                    isHTTPOnly: true,
+                    sameSite: .lax
+                )
+            }
         )
-      }
-    )
-  }
+    }
 }

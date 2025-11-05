@@ -5,11 +5,11 @@
 //  Created by Coen ten Thije Boonkkamp on 24/09/2025.
 //
 
-import Vapor
-@_exported import Favicon
-import URLRouting
 import Dependencies
+@_exported import Favicon
 import Foundation
+import URLRouting
+import Vapor
 
 extension Favicon {
     public static func response(
@@ -26,7 +26,7 @@ extension Favicon {
                 status: .ok,
                 headers: [
                     "Content-Type": favicon.contentType(for: route),
-                    "Cache-Control": "public, max-age=31536000, immutable" // 1 year, immutable
+                    "Cache-Control": "public, max-age=31536000, immutable",  // 1 year, immutable
                 ],
                 body: .init(data: data)
             )

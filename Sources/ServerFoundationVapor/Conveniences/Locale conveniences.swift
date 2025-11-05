@@ -9,25 +9,25 @@ import Foundation
 import Vapor
 
 extension Vapor.Request {
-  public var locale: Locale { .init(request: self) }
+    public var locale: Locale { .init(request: self) }
 }
 
 extension Foundation.Locale {
-  public init(
-    request: Vapor.Request
-  ) {
-    if let acceptLanguage = request.headers.first(name: HTTPHeaders.Name.acceptLanguage) {
-      let languages = acceptLanguage.split(separator: ",").map { substring in
-        let components = substring.split(separator: ";")
-        return String(components.first!)
-      }
+    public init(
+        request: Vapor.Request
+    ) {
+        if let acceptLanguage = request.headers.first(name: HTTPHeaders.Name.acceptLanguage) {
+            let languages = acceptLanguage.split(separator: ",").map { substring in
+                let components = substring.split(separator: ";")
+                return String(components.first!)
+            }
 
-      if let primaryLanguage = languages.first {
-        self.init(identifier: primaryLanguage)
-        return
-      }
+            if let primaryLanguage = languages.first {
+                self.init(identifier: primaryLanguage)
+                return
+            }
+        }
+        // Fallback to a default locale if no valid language is found
+        self.init(identifier: "en_US")
     }
-    // Fallback to a default locale if no valid language is found
-    self.init(identifier: "en_US")
-  }
 }
