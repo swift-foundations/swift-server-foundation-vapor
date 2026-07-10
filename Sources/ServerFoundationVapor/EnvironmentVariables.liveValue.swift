@@ -5,8 +5,8 @@
 //  Created by Coen ten Thije Boonkkamp on 01/08/2025.
 //
 
-import EnvironmentVariables
 import Foundation
+import ServerFoundation
 import Vapor
 
 //extension EnvironmentVariables: @retroactive DependencyKey {
