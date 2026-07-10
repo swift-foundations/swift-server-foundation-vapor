@@ -32,8 +32,8 @@ let package = Package(
         .library(name: .serverFoundationVaporTesting, targets: [.serverFoundationVaporTesting])
     ],
     dependencies: [
-        .package(url: "https://github.com/coenttb/swift-favicon", from: "0.1.0"),
-        .package(url: "https://github.com/coenttb/swift-server-foundation.git", from: "0.1.0"),
+        .package(url: "https://github.com/swift-foundations/swift-favicon.git", branch: "main"),
+        .package(url: "https://github.com/swift-foundations/swift-server-foundation.git", branch: "main"),
         .package(url: "https://github.com/pointfreeco/vapor-routing.git", from: "0.1.3"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.102.1")
     ],
