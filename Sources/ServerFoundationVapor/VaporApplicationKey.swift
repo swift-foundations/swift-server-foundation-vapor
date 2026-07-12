@@ -9,13 +9,13 @@ import Dependencies
 import Foundation
 import Vapor
 
-extension DependencyValues {
+extension Dependency.Values {
     public var application: Vapor.Application {
         get { self[VaporApplicationKey.self] }
         set { self[VaporApplicationKey.self] = newValue }
     }
 }
 
-public enum VaporApplicationKey: TestDependencyKey {
+public enum VaporApplicationKey: Dependency.Key.Test {
     public static var testValue: Vapor.Application { Application(.testing) }
 }

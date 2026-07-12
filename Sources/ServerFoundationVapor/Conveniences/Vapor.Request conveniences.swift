@@ -9,12 +9,12 @@ import ServerFoundation
 import Translating
 import Vapor
 
-extension Vapor.Request: @retroactive DependencyKey {
+extension Vapor.Request: @retroactive Dependency.Key {
     public static let testValue: Vapor.Request? = nil
     public static let liveValue: Vapor.Request? = nil
 }
 
-extension DependencyValues {
+extension Dependency.Values {
     public var request: Vapor.Request? {
         get { self[Vapor.Request.self] }
         set { self[Vapor.Request.self] = newValue }

@@ -38,7 +38,7 @@ extension HTTPCookies {
     }
 }
 
-extension HTTPCookies.Configuration: TestDependencyKey {
+extension HTTPCookies.Configuration: Dependency.Key.Test {
     public static let testValue: HTTPCookies.Configuration = .init(expires: 60 * 60 * 24)
 }
 
@@ -84,8 +84,8 @@ extension ParserPrinter where Input == URLRequestData {
     /// - Parameters:
     ///   - name: Cookie name
     ///   - value: Cookie value
-    /// - Returns: Modified BaseURLPrinter with the cookie set
-    public func cookie(_ name: String, _ value: HTTPCookies.Value) -> BaseURLPrinter<Self> {
+    /// - Returns: Modified URI.BaseURLPrinter with the cookie set
+    public func cookie(_ name: String, _ value: HTTPCookies.Value) -> URI.BaseURLPrinter<Self> {
         var requestData = URLRequestData()
         requestData.headers["cookie", default: []].append("\(name)=\(value.string)"[...])
         return self.baseRequestData(requestData)
@@ -95,8 +95,8 @@ extension ParserPrinter where Input == URLRequestData {
     /// - Parameters:
     ///   - name: Cookie name
     ///   - value: Optional cookie value, if nil no cookie is set
-    /// - Returns: Modified BaseURLPrinter with the cookie set if value exists
-    public func cookie(_ name: String, _ value: HTTPCookies.Value?) -> BaseURLPrinter<Self> {
+    /// - Returns: Modified URI.BaseURLPrinter with the cookie set if value exists
+    public func cookie(_ name: String, _ value: HTTPCookies.Value?) -> URI.BaseURLPrinter<Self> {
         guard let value = value
         else { return self.baseRequestData(.init()) }
         return self.cookie(name, value)
@@ -104,8 +104,8 @@ extension ParserPrinter where Input == URLRequestData {
 
     /// Sets multiple cookies at once
     /// - Parameter cookies: Dictionary mapping cookie names to values
-    /// - Returns: Modified BaseURLPrinter with all cookies set
-    public func cookies(_ cookies: [String: HTTPCookies.Value]) -> BaseURLPrinter<Self> {
+    /// - Returns: Modified URI.BaseURLPrinter with all cookies set
+    public func cookies(_ cookies: [String: HTTPCookies.Value]) -> URI.BaseURLPrinter<Self> {
         var requestData = URLRequestData()
         requestData.headers["cookie", default: []].append(
             cookies

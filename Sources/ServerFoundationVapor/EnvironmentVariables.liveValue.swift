@@ -9,7 +9,7 @@ import Foundation
 import ServerFoundation
 import Vapor
 
-//extension EnvironmentVariables: @retroactive DependencyKey {
+//extension EnvironmentVariables: @retroactive Dependency.Key {
 //    public static var liveValue: EnvironmentVariables {
 //        @Dependency(\.projectRoot) var projectRoot
 //        let environment = try? Vapor.Environment.detect()

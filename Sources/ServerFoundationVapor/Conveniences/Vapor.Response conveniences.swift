@@ -224,3 +224,43 @@ extension Vapor.Response {
         }
     }
 }
+
+// MARK: - AnyCodable (private vendor)
+// Heritage: minimal private re-expression of the community AnyCodable shape
+// (Flight-School/AnyCodable lineage), sufficient for json(success:data:message:)
+// only. Supervisor-approved 2026-07-12 (sprint ledger 14:15; no public surface).
+// Pass-2 re-expression onto institute JSON: filed in the DECISIONS-pass2 queue.
+private enum AnyCodable: Encodable {
+    case null
+    case bool(Bool)
+    case int(Int)
+    case double(Double)
+    case string(String)
+    case array([AnyCodable])
+    case dictionary([String: AnyCodable])
+
+    init(_ value: Any) {
+        switch value {
+        case let v as Bool: self = .bool(v)
+        case let v as Int: self = .int(v)
+        case let v as Double: self = .double(v)
+        case let v as String: self = .string(v)
+        case let v as [Any]: self = .array(v.map(AnyCodable.init))
+        case let v as [String: Any]: self = .dictionary(v.mapValues(AnyCodable.init))
+        default: self = .null
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .null: try container.encodeNil()
+        case .bool(let v): try container.encode(v)
+        case .int(let v): try container.encode(v)
+        case .double(let v): try container.encode(v)
+        case .string(let v): try container.encode(v)
+        case .array(let v): try container.encode(v)
+        case .dictionary(let v): try container.encode(v)
+        }
+    }
+}
