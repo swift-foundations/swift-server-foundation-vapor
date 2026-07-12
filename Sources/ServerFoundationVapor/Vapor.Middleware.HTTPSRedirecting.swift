@@ -5,7 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 17/07/2023.
 //
 
-import IssueReporting
 import ServerFoundation
 import Vapor
 
