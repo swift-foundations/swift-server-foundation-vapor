@@ -17,7 +17,7 @@ extension Target.Dependency {
     static var serverFoundation: Self { .product(name: "ServerFoundation", package: "swift-server-foundation") }
     static var favicon: Self { .product(name: "Favicon", package: "swift-favicon") }
     static var vapor: Self { .product(name: "Vapor", package: "vapor") }
-    static var vaporRouting: Self { .product(name: "VaporRouting", package: "vapor-routing") }
+    static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing") }
     static var vaporTesting: Self { .product(name: "VaporTesting", package: "vapor") }
 }
 
@@ -34,7 +34,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swift-foundations/swift-favicon.git", branch: "main"),
         .package(url: "https://github.com/swift-foundations/swift-server-foundation.git", branch: "main"),
-        .package(url: "https://github.com/pointfreeco/vapor-routing.git", from: "0.1.3"),
+        .package(url: "https://github.com/swift-foundations/swift-url-routing.git", branch: "main"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.102.1")
     ],
     targets: [
@@ -43,7 +43,7 @@ let package = Package(
             dependencies: [
                 .serverFoundation,
                 .vapor,
-                .vaporRouting,
+                .urlRouting,
                 .favicon
             ]
         ),

@@ -7,4 +7,4 @@
 
 @_exported import ServerFoundation
 @_exported import Vapor
-@_exported import VaporRouting
+@_exported import URLRouting
