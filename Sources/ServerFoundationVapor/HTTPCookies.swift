@@ -84,8 +84,8 @@ extension ParserPrinter where Input == URLRequestData {
     /// - Parameters:
     ///   - name: Cookie name
     ///   - value: Cookie value
-    /// - Returns: Modified URI.BaseURLPrinter with the cookie set
-    public func cookie(_ name: String, _ value: HTTPCookies.Value) -> URI.BaseURLPrinter<Self> {
+    /// - Returns: Modified RFC_3986.URI.BaseURLPrinter with the cookie set
+    public func cookie(_ name: String, _ value: HTTPCookies.Value) -> RFC_3986.URI.BaseURLPrinter<Self> {
         var requestData = URLRequestData()
         requestData.headers["cookie", default: []].append("\(name)=\(value.string)"[...])
         return self.baseRequestData(requestData)
@@ -95,8 +95,8 @@ extension ParserPrinter where Input == URLRequestData {
     /// - Parameters:
     ///   - name: Cookie name
     ///   - value: Optional cookie value, if nil no cookie is set
-    /// - Returns: Modified URI.BaseURLPrinter with the cookie set if value exists
-    public func cookie(_ name: String, _ value: HTTPCookies.Value?) -> URI.BaseURLPrinter<Self> {
+    /// - Returns: Modified RFC_3986.URI.BaseURLPrinter with the cookie set if value exists
+    public func cookie(_ name: String, _ value: HTTPCookies.Value?) -> RFC_3986.URI.BaseURLPrinter<Self> {
         guard let value = value
         else { return self.baseRequestData(.init()) }
         return self.cookie(name, value)
@@ -104,8 +104,8 @@ extension ParserPrinter where Input == URLRequestData {
 
     /// Sets multiple cookies at once
     /// - Parameter cookies: Dictionary mapping cookie names to values
-    /// - Returns: Modified URI.BaseURLPrinter with all cookies set
-    public func cookies(_ cookies: [String: HTTPCookies.Value]) -> URI.BaseURLPrinter<Self> {
+    /// - Returns: Modified RFC_3986.URI.BaseURLPrinter with all cookies set
+    public func cookies(_ cookies: [String: HTTPCookies.Value]) -> RFC_3986.URI.BaseURLPrinter<Self> {
         var requestData = URLRequestData()
         requestData.headers["cookie", default: []].append(
             cookies
@@ -116,7 +116,7 @@ extension ParserPrinter where Input == URLRequestData {
     }
 }
 
-extension URLRequestData.Fields {
+extension RFC_3986.URI.Request.Fields {
     /// Convenience accessor for the Authorization header
     public var authorization: ArraySlice<Substring?>? {
         get {
