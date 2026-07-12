@@ -18,7 +18,7 @@ import URLRouting
             guard let methodString = urlRequestData.method else {
                 throw URLError(.badURL, userInfo: ["reason": "Missing HTTP method"])
             }
-            let method = HTTPMethod(rawValue: methodString)
+            let method = HTTPMethod(rawValue: methodString.rawValue)
 
             // Construct URI from URLRequestData components
             var url = URI()
