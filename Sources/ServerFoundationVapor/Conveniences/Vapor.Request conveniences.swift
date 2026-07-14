@@ -15,9 +15,22 @@ extension Vapor.Request: @retroactive Dependency.Key {
 }
 
 extension Dependency.Values {
+    /// The ambient `Vapor.Request`, or `nil` outside a request scope.
+    ///
+    /// - Important: **Superseded spelling — migrating to ``Dependency/Values/vapor``.** Prefer
+    ///   `@Dependency(\.vapor.request)`. swift-server's membrane vends an ambient request under this
+    ///   same name (`Server.Request` — a *different type*), so a module importing both would face two
+    ///   `\.request` properties. Naming the container is what kills the ambiguity.
+    ///
+    /// ## This is an ALIAS onto ``Dependency/Values/vapor``, not a second storage slot
+    ///
+    /// One storage slot, so the spellings cannot diverge and call sites may migrate in any order. In
+    /// particular a *nested* `withDependencies` override on the old spelling — and such writers live
+    /// in repos this seat does not own — shadows both, instead of leaving the container holding a
+    /// stale outer value that a migrated read would pick up silently.
     public var request: Vapor.Request? {
-        get { self[Vapor.Request.self] }
-        set { self[Vapor.Request.self] = newValue }
+        get { self.vapor.request }
+        set { self.vapor.request = newValue }
     }
 }
 

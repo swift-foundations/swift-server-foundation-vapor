@@ -15,7 +15,7 @@ extension Favicon {
     public static func response(
         route: Favicon.Route
     ) async throws -> any AsyncResponseEncodable {
-        @Dependency(\.request) var request
+        @Dependency(\.vapor.request) var request
         @Dependency(\.favicon) var favicon
 
         guard let request else { throw Abort(.internalServerError) }

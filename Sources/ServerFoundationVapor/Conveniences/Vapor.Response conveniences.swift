@@ -213,7 +213,7 @@ extension Vapor.Response {
     public func expire(
         cookies: [WritableKeyPath<HTTPCookies, HTTPCookies.Value?>]
     ) {
-        @Dependency(\.request) var request
+        @Dependency(\.vapor.request) var request
         guard let request else { return }
 
         cookies.forEach { cookiePath in
