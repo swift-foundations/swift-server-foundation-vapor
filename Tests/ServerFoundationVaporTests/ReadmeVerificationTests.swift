@@ -11,11 +11,11 @@ import Throttling
 
 #if compiler(>=6.0) && canImport(Testing)
 
-    @Suite("README Verification")
-    struct ReadmeVerificationTests {
+    @Suite
+    struct Test {
 
-        @Test("Example from README: Closure-Based Middleware - compiles")
-        func testClosureMiddlewareCompiles() throws {
+        @Test
+        func `Example from README: Closure-Based Middleware - compiles`() throws {
             // This test verifies that the README example compiles
             // The actual usage would be in a running app context
 
@@ -33,8 +33,8 @@ import Throttling
             #expect(true)
         }
 
-        @Test("Example from README: Rate Limiting Middleware - compiles")
-        func testRateLimitingMiddlewareCompiles() async throws {
+        @Test
+        func `Example from README: Rate Limiting Middleware - compiles`() async throws {
             // Example from README lines 71-88
             let rateLimiter = RateLimiter<String>(
                 windows: [.minutes(1, maxAttempts: 100)]
@@ -52,8 +52,8 @@ import Throttling
             #expect(true)
         }
 
-        @Test("Example from README: Custom HTTP Headers")
-        func testCustomHTTPHeaders() throws {
+        @Test
+        func `Example from README: Custom HTTP Headers`() throws {
             // Example from README lines 93-111 (structure verification)
             let _: (Request) async throws -> Response = { request in
                 let response = Response(status: .ok)
@@ -75,8 +75,8 @@ import Throttling
             #expect(true)
         }
 
-        @Test("HTTP Header Extensions")
-        func testHTTPHeaderExtensions() {
+        @Test
+        func `HTTP Header Extensions`() {
             // Verify custom header names exist (Vapor normalizes to lowercase)
             #expect(HTTPHeaders.Name.xRateLimitLimit.description == "x-ratelimit-limit")
             #expect(HTTPHeaders.Name.xRateLimitRemaining.description == "x-ratelimit-remaining")
@@ -101,15 +101,15 @@ import Throttling
             #expect(HTTPHeaders.Name.cfCity.description == "cf-city")
         }
 
-        @Test("Middleware Closure Type Exists")
-        func testMiddlewareClosureExists() {
+        @Test
+        func `Middleware Closure Type Exists`() {
             // Verify that the Closure middleware type exists
             let _: Vapor.Middlewares.Closure.Type = Vapor.Middlewares.Closure.self
             #expect(true)
         }
 
-        @Test("Rate Limiting Middleware Type Exists")
-        func testRateLimitingMiddlewareTypeExists() {
+        @Test
+        func `Rate Limiting Middleware Type Exists`() {
             // Verify that the rate limiting middleware type exists
             let _: Vapor.Middlewares.Ratelimiting<String>.Type = Vapor.Middlewares.Ratelimiting<
                 String
