@@ -14,6 +14,7 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
+    static var logging: Self { .product(name: "Logging", package: "swift-log") }
     static var serverFoundation: Self { .product(name: "ServerFoundation", package: "swift-server-foundation") }
     static var favicon: Self { .product(name: "Favicon", package: "swift-favicon") }
     static var vapor: Self { .product(name: "Vapor", package: "vapor") }
@@ -32,6 +33,7 @@ let package = Package(
         .library(name: .serverFoundationVaporTesting, targets: [.serverFoundationVaporTesting])
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
         .package(url: "https://github.com/swift-foundations/swift-favicon.git", branch: "main"),
         .package(url: "https://github.com/swift-foundations/swift-server-foundation.git", branch: "main"),
         .package(url: "https://github.com/swift-foundations/swift-url-routing.git", branch: "main"),
@@ -41,6 +43,7 @@ let package = Package(
         .target(
             name: .serverFoundationVapor,
             dependencies: [
+                .logging,
                 .serverFoundation,
                 .vapor,
                 .urlRouting,

@@ -5,6 +5,7 @@
 //  Created by Claude on 31/07/2025.
 //
 
+import Logging
 import ServerFoundation
 import Vapor
 
