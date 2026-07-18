@@ -18,9 +18,12 @@ extension Target.Dependency {
     }
     static var logging: Self { .product(name: "Logging", package: "swift-log") }
     static var metrics: Self { .product(name: "Metrics", package: "swift-metrics") }
+    static var nioCore: Self { .product(name: "NIOCore", package: "swift-nio") }
+    static var nioHTTP1: Self { .product(name: "NIOHTTP1", package: "swift-nio") }
     static var redirect: Self { .product(name: "HTTP Redirect", package: "swift-http-redirect") }
     static var server: Self { .product(name: "Server", package: "swift-server") }
     static var vapor: Self { .product(name: "Vapor", package: "vapor") }
+    static var xctVapor: Self { .product(name: "XCTVapor", package: "vapor") }
 }
 
 let package = Package(
@@ -50,6 +53,7 @@ let package = Package(
         ),
         .package(url: "https://github.com/apple/swift-metrics.git", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.6.4"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.81.0"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.102.1"),
     ],
     targets: [
@@ -69,7 +73,14 @@ let package = Package(
         ),
         .testTarget(
             name: "Server Vapor Tests",
-            dependencies: [.serverVapor, .server, .vapor]
+            dependencies: [
+                .serverVapor,
+                .server,
+                .vapor,
+                .nioCore,
+                .nioHTTP1,
+                .xctVapor,
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]

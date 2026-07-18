@@ -1,4 +1,3 @@
-import Foundation
 import HTTP_Standard
 import Server
 
@@ -52,33 +51,6 @@ extension Vapor.Middlewares {
                 throw .engine(String(describing: error))
             }
         }
-    }
-}
-
-extension Server.Request {
-    fileprivate init(_ request: Vapor.Request) async throws {
-        let url = URL(string: request.url.string)
-        let path = url?.path.split(separator: "/").map(String.init) ?? []
-        let query = url?.query
-        let headers = HTTP.Headers(
-            request.headers.map {
-                HTTP.Header.Field(
-                    name: .init($0.name),
-                    value: .init(unchecked: $0.value)
-                )
-            }
-        )
-        var body: [UInt8] = []
-        if let buffer = try await request.body.collect().get() {
-            body = Array(buffer.readableBytesView)
-        }
-        self.init(
-            method: HTTP.Method(rawValue: request.method.rawValue),
-            path: path,
-            query: query,
-            headers: headers,
-            body: body
-        )
     }
 }
 
