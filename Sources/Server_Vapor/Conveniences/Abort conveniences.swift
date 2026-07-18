@@ -1,19 +1,26 @@
+private import enum NIOHTTP1.HTTPResponseStatus
 import Server
 import struct Vapor.Abort
 
 extension Abort {
     public init(_ error: Server.Error) {
         switch error {
-        case .notFound: self.init(.notFound)
-        case .badRequest(let reason): self.init(.badRequest, reason: reason)
-        case .unauthorized: self.init(.unauthorized)
-        case .forbidden: self.init(.forbidden)
-        case .payloadTooLarge: self.init(.payloadTooLarge)
-        case .decoding(let value): self.init(.unprocessableEntity, reason: "Failed to decode \(value)")
-        case .encoding(let value): self.init(.internalServerError, reason: "Failed to encode \(value)")
-        case .engine(let description): self.init(.internalServerError, reason: description)
-        case .unavailable(let service): self.init(.serviceUnavailable, reason: service)
-        case .internalError(let description): self.init(.internalServerError, reason: description)
+        case .notFound: self.init(HTTPResponseStatus.notFound)
+        case .badRequest(let reason):
+            self.init(HTTPResponseStatus.badRequest, reason: reason)
+        case .unauthorized: self.init(HTTPResponseStatus.unauthorized)
+        case .forbidden: self.init(HTTPResponseStatus.forbidden)
+        case .payloadTooLarge: self.init(HTTPResponseStatus.payloadTooLarge)
+        case .decoding(let value):
+            self.init(HTTPResponseStatus.unprocessableEntity, reason: "Failed to decode \(value)")
+        case .encoding(let value):
+            self.init(HTTPResponseStatus.internalServerError, reason: "Failed to encode \(value)")
+        case .engine(let description):
+            self.init(HTTPResponseStatus.internalServerError, reason: description)
+        case .unavailable(let service):
+            self.init(HTTPResponseStatus.serviceUnavailable, reason: service)
+        case .internalError(let description):
+            self.init(HTTPResponseStatus.internalServerError, reason: description)
         }
     }
 

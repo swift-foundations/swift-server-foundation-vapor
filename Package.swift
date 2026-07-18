@@ -68,6 +68,7 @@ let package = Package(
                 .httpStandard,
                 .logging,
                 .metrics,
+                .nioHTTP1,
                 .redirect,
             ]
         ),
