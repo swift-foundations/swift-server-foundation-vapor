@@ -33,10 +33,8 @@ extension Vapor.Request {
     /// The flat ``Dependency/Values/request`` still exists and still works; it is retired only once
     /// every call site in the ecosystem has moved, so nothing breaks on the mint.
     ///
-    /// - Note: The type nests under `Vapor.Request` rather than taking a new top-level name on
-    ///   purpose. This module `@_exported`-imports Vapor, ServerFoundation and URLRouting, and a bare
-    ///   top-level noun can bind **silently** to an umbrella's export — a failure that misreports
-    ///   itself as a missing member rather than an ambiguity. Nesting removes the hazard.
+    /// - Note: The type nests under `Vapor.Request` so the engine-side request scope remains
+    ///   unambiguous when this adapter is imported alongside the engine-free `Server` package.
     public struct Scope: Sendable {
         /// The ambient `Vapor.Request`, or `nil` outside a request scope.
         public var request: Vapor.Request?
