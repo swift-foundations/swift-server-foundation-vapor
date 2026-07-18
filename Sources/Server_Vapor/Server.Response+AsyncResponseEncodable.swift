@@ -1,7 +1,7 @@
 import Server
-import protocol Vapor.AsyncResponseEncodable
-import class Vapor.Request
-import class Vapor.Response
+public import protocol Vapor.AsyncResponseEncodable
+public import class Vapor.Request
+public import class Vapor.Response
 
 // swift-format-ignore: AvoidRetroactiveConformances
 extension Server.Response: @retroactive AsyncResponseEncodable {
