@@ -1,5 +1,5 @@
 import Server
-import Vapor
+import struct Vapor.Abort
 
 extension Abort {
     public init(_ error: Server.Error) {
@@ -27,13 +27,13 @@ extension Server.Error {
     public init(_ abort: Abort) {
         switch abort.status {
         case .notFound: self = .notFound
-        case .badRequest: self = .badRequest(abort.reason ?? "")
+        case .badRequest: self = .badRequest(abort.reason)
         case .unauthorized: self = .unauthorized
         case .forbidden: self = .forbidden
         case .payloadTooLarge: self = .payloadTooLarge
-        case .unprocessableEntity: self = .decoding(abort.reason ?? "value")
-        case .serviceUnavailable: self = .unavailable(abort.reason ?? "service")
-        default: self = .engine(abort.reason ?? "Vapor abort")
+        case .unprocessableEntity: self = .decoding(abort.reason)
+        case .serviceUnavailable: self = .unavailable(abort.reason)
+        default: self = .engine(abort.reason)
         }
     }
 }
