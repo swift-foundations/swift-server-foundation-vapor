@@ -83,6 +83,17 @@ let package = Package(
                 .xctVapor,
             ]
         ),
+        .testTarget(
+            name: "Server Vapor Consumer Tests",
+            dependencies: [
+                .serverVapor,
+                .server,
+                .logging,
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("MemberImportVisibility")
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
