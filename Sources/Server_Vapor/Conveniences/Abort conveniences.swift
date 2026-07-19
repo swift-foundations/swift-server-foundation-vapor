@@ -13,6 +13,8 @@ extension Abort {
         case .payloadTooLarge: self.init(HTTPResponseStatus.payloadTooLarge)
         case .decoding(let value):
             self.init(HTTPResponseStatus.unprocessableEntity, reason: "Failed to decode \(value)")
+        case .notImplemented(let reason):
+            self.init(HTTPResponseStatus.notImplemented, reason: reason)
         case .encoding(let value):
             self.init(HTTPResponseStatus.internalServerError, reason: "Failed to encode \(value)")
         case .engine(let description):
@@ -39,6 +41,7 @@ extension Server.Error {
         case .forbidden: self = .forbidden
         case .payloadTooLarge: self = .payloadTooLarge
         case .unprocessableEntity: self = .decoding(abort.reason)
+        case .notImplemented: self = .notImplemented(abort.reason)
         case .serviceUnavailable: self = .unavailable(abort.reason)
         default: self = .engine(abort.reason)
         }
