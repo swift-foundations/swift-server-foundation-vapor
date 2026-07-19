@@ -5,11 +5,15 @@ import struct Vapor.Abort
 extension Abort {
     public init(_ error: Server.Error) {
         switch error {
-        case .notFound: self.init(HTTPResponseStatus.notFound)
+        case .notFound(let reason):
+            self.init(HTTPResponseStatus.notFound, reason: reason)
         case .badRequest(let reason):
             self.init(HTTPResponseStatus.badRequest, reason: reason)
         case .unauthorized: self.init(HTTPResponseStatus.unauthorized)
-        case .forbidden: self.init(HTTPResponseStatus.forbidden)
+        case .paymentRequired(let reason):
+            self.init(HTTPResponseStatus.paymentRequired, reason: reason)
+        case .forbidden(let reason):
+            self.init(HTTPResponseStatus.forbidden, reason: reason)
         case .payloadTooLarge: self.init(HTTPResponseStatus.payloadTooLarge)
         case .decoding(let value):
             self.init(HTTPResponseStatus.unprocessableEntity, reason: "Failed to decode \(value)")
@@ -35,10 +39,11 @@ extension Abort {
 extension Server.Error {
     public init(_ abort: Abort) {
         switch abort.status {
-        case .notFound: self = .notFound
+        case .notFound: self = .notFound(abort.reason)
         case .badRequest: self = .badRequest(abort.reason)
         case .unauthorized: self = .unauthorized
-        case .forbidden: self = .forbidden
+        case .paymentRequired: self = .paymentRequired(abort.reason)
+        case .forbidden: self = .forbidden(abort.reason)
         case .payloadTooLarge: self = .payloadTooLarge
         case .unprocessableEntity: self = .decoding(abort.reason)
         case .notImplemented: self = .notImplemented(abort.reason)
