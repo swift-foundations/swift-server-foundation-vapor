@@ -81,6 +81,10 @@ let package = Package(
                 .nioCore,
                 .nioHTTP1,
                 .xctVapor,
+                // Favicon.response.Tests.swift direct imports.
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .favicon,
+                .httpStandard,
             ]
         ),
         .testTarget(

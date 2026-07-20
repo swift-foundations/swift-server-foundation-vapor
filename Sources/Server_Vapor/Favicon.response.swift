@@ -1,23 +1,25 @@
 import Dependencies
 import Favicon
-import Vapor
+import HTTP_Standard
+public import Server
 
 extension Favicon {
+    /// Renders the favicon response as a concrete, engine-free `Server.Response`.
     public static func response(
         route: Favicon.Route
-    ) async throws -> any AsyncResponseEncodable {
+    ) async throws -> Server.Response {
         @Dependency(\.favicon) var favicon
         guard let response = favicon.response(for: route) else {
-            throw Abort(.notFound)
+            throw Server.Error.notFound("Not Found")
         }
 
-        return Vapor.Response(
-            status: .ok,
-            headers: [
-                "Content-Type": response.contentType,
-                "Cache-Control": response.cacheControl,
-            ],
-            body: .init(data: response.body)
+        let headers = try HTTP.Headers([
+            .init(name: "Content-Type", value: response.contentType),
+            .init(name: "Cache-Control", value: response.cacheControl),
+        ])
+        return Server.Response(
+            headers: headers,
+            body: Array(response.body)
         )
     }
 }
